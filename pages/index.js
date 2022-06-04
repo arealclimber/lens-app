@@ -29,6 +29,13 @@ export default function Home() {
 			{profiles.map((profile, index) => (
 				<Link href={`/profile/${profile.id}`}>
 					<a>
+                        {
+                            profiles.picutre ? (
+                                
+                            ) : (
+                                
+                            )
+                        }
 						<div>
 							<h4>{profile.handle}</h4>
 							<p>{profile.bio}</p>
