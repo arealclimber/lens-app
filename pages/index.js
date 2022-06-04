@@ -31,8 +31,16 @@ export default function Home() {
 					<a>
                         {
                             profiles.picutre ? (
-                                
+                                <Img 
+                                    src={profile.picutre.original.url}
+                                    width='60px'
+                                    height='60px'
+                                />
                             ) : (
+                                <div
+                                    style={{ width: '60px', height: '60px', backgroundColor: 'blue' }}
+                                    
+                                    />
                                 
                             )
                         }
