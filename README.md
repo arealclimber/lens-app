@@ -1,6 +1,7 @@
 # Lens Protocol
 
 -   LENS Docs - [Profile](https://docs.lens.xyz/docs/profiles)
+-   CAUTIONS: ```Note that as a design choice, all NFTs should not mint a token with tokenId == 0 in any circumstance, as this is equivalent to an uninitialized variable. Furthermore, ERC721 standard functions have been omitted from this document.```
 
 # Next
 
