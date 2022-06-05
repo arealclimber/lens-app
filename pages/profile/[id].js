@@ -1,34 +1,70 @@
-import {useRouter} from 'next/router'
-import {useState, useEffect} from 'react'
-import {client, getProfiles} from '../../api'
+import { useRouter } from 'next/router'
+import { useState, useEffect } from 'react'
+import { client, getProfiles, getPublications } from '../../api'
 import Image from 'next/image'
 
 export default function Profile() {
-    const router = useRouter()
-    const {id} = router.query
+	const [profile, setProfile] = useState()
+	const [pubs, setPubs] = useState([])
+	const router = useRouter()
+	const { id } = router.query
 
-    useEffect(() => {
-        if (id) {
-            fetchProfile()
-        }
-    }, [id])
+	useEffect(() => {
+		if (id) {
+			fetchProfile()
+		}
+	}, [id])
 
-    async function fetchProfile() {
-        try {
-            const response = await client.query(getProfiles, {id}).toPromise()
-            console.log('response: ', response)
-        } catch (err) {
-            console.error(err)
-        }
-    }
+	async function fetchProfile() {
+		try {
+			const response = await client.query(getProfiles, { id }).toPromise()
+			console.log('response: ', response)
 
+			setProfile(response.data.profiles.items[0])
 
-    return (
-        <div>
-            {id}
-        </div>
-    )
+			console.log({ id })
+
+			// const publicationData = await client
+			// 	.query(getPublications, {
+			// 		request: {
+			// 			id,
+			// 		},
+			// 	})
+			// 	.toPromise()
+			const publicationData = await client
+				.query(getPublications, { id })
+				.toPromise()
+			console.log(`Publication Data: ${publicationData}`)
+		} catch (err) {
+			console.error(err)
+		}
+	}
+
+	if (!profile) return null
+
+	return (
+		<div>
+			{profile.picture ? (
+				<Image
+					width="200px"
+					height="200px"
+					src={profile.picture.original.url}
+				/>
+			) : (
+				<div
+					style={{
+						width: '200px',
+						height: '200px',
+						backgroundColor: 'blue',
+					}}
+				/>
+			)}
+			<div>
+				<h4>{profile.handle}</h4>
+				<p>{profile.bio}</p>
+				<p>Followers: {profile.stats.totalFollowers}</p>
+				<p>Following: {profile.stats.totalFollowing}</p>
+			</div>
+		</div>
+	)
 }
-
-
-
