@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 export default function Home() {
+	const oBlueColor = '#A5C4F3' + '90'
 	const [profiles, setProfiles] = useState([])
 	useEffect(() => {
 		fetchProfiles()
@@ -13,6 +14,7 @@ export default function Home() {
 		try {
 			const response = await client.query(recommendProfiles).toPromise()
 			console.log({ response })
+
 			setProfiles(response.data.recommendedProfiles)
 		} catch (err) {
 			console.error(err)
@@ -27,24 +29,27 @@ export default function Home() {
 	return (
 		<div>
 			{profiles.map((profile, index) => (
-				<Link href={`/profile/${profile.id}`}>
+				<Link href={`/profile/${profile.id}`} key={index}>
 					<a>
-                        {
-                            profiles.picutre ? (
-                                <Img 
-                                    src={profile.picutre.original.url}
-                                    width='60px'
-                                    height='60px'
-                                />
-                            ) : (
-                                <div
-                                    style={{ width: '60px', height: '60px', backgroundColor: 'blue' }}
-                                    
-                                    />
-                                
-                            )
-                        }
 						<div>
+							{profile.picutre ? (
+								<Image
+									alt="Profile Picture"
+									src={profile.picture.original.url}
+									width={60}
+									height={60}
+								/>
+							) : (
+								<div
+									style={{
+										width: '60px',
+										height: '60px',
+										backgroundColor: oBlueColor,
+										border: '1px solid black',
+									}}
+								/>
+							)}
+
 							<h4>{profile.handle}</h4>
 							<p>{profile.bio}</p>
 						</div>
