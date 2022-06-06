@@ -44,7 +44,7 @@ export default function Profile() {
 			// TODO: Note!!!!!
 			console.log({ publicationData })
 			setPubs(publicationData.data.publications.items)
-			// console.log(`Publication Data: ${publicationData}`)
+			console.log(`Publication Data: ${publicationData}`)
 			// console.log(JSON.stringify(publicationData))
 			// setPubs(publicationData.)
 		} catch (err) {
@@ -81,7 +81,7 @@ export default function Profile() {
 	return (
 		<div>
 			<button onClick={connect}>Connect</button>
-			{profile.picture ? (
+			{profile.picture.original ? (
 				<Image
 					alt="Profile Picture"
 					width="200px"
