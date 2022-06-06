@@ -15,6 +15,13 @@ export default function Profile() {
 	const router = useRouter()
 	const { id } = router.query
 
+	const blankPhotoStyle = {
+		width: '200px',
+		height: '200px',
+		backgroundColor: oBlueColor,
+		border: '1px solid black',
+	}
+
 	useEffect(() => {
 		if (id) {
 			fetchProfile()
@@ -81,22 +88,24 @@ export default function Profile() {
 	return (
 		<div>
 			<button onClick={connect}>Connect</button>
-			{profile.picture.original ? (
-				<Image
-					alt="Profile Picture"
-					width="200px"
-					height="200px"
-					src={profile.picture.original.url}
-				/>
+			{profile.picture ? (
+				profile.picture.original ? (
+					<Image
+						src={profile.picture.original.url}
+						width={200}
+						height={200}
+						alt="loading..."
+					/>
+				) : (
+					<Image
+						src={profile.picture.uri}
+						width={200}
+						height={200}
+						alt="loading..."
+					/>
+				)
 			) : (
-				<div
-					style={{
-						width: '200px',
-						height: '200px',
-						backgroundColor: oBlueColor,
-						border: '1px solid black',
-					}}
-				/>
+				<div style={blankPhotoStyle} />
 			)}
 			<div>
 				<h4>{profile.handle}</h4>
