@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { client, getProfiles, getPublications } from '../../api'
 import Image from 'next/image'
 import { ethers } from 'ethers'
+import Link from 'next/link'
 
 import ABI from '../../abi.json'
 const address = '0xDb46d1Dc155634FbC732f92E853b10B288AD5a1d'
@@ -48,7 +49,6 @@ export default function Profile() {
 				.query(getPublications, { id })
 				.toPromise()
 
-			// TODO: Note!!!!!
 			console.log({ publicationData })
 			setPubs(publicationData.data.publications.items)
 			console.log(`Publication Data: ${publicationData}`)
@@ -67,6 +67,7 @@ export default function Profile() {
 		// console.log(accounts)
 	}
 
+	// FIXME: contract.follow is not a function
 	async function followUser() {
 		const provider = new ethers.providers.Web3Provider(window.ethereum)
 		const signer = provider.getSigner()
